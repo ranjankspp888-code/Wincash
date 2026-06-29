@@ -1,5 +1,5 @@
 // GitHub Path: modules/login.js
-// Modern Trusted UI with Beautiful Logo & High-Visibility Gold/White Intro Text
+// Modern Trusted UI with Professional Light Background For Login Card
 
 const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec"; 
 
@@ -16,7 +16,7 @@ export function drawGamingUI() {
                 justify-content: center;
             }
 
-            /* 1. 2-Second Intro Splash Screen (High Visibility) */
+            /* 1. 2-Second Intro Splash Screen */
             .intro-screen {
                 text-align: center;
                 display: flex;
@@ -26,7 +26,6 @@ export function drawGamingUI() {
                 animation: fadeOut 0.5s ease 2s forwards;
             }
             
-            /* Professional Shield & Controller Logo Icon */
             .modern-logo-box {
                 width: 80px;
                 height: 80px;
@@ -41,27 +40,26 @@ export function drawGamingUI() {
                 animation: pulse 1.5s infinite alternate;
             }
             
-            /* Bright Gold & Premium White Text for High Contrast */
             .intro-title {
                 font-size: 32px;
                 font-weight: 800;
-                color: #ffffff; /* Pure White text */
+                color: #ffffff; 
                 margin-bottom: 10px;
                 letter-spacing: 1px;
                 text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
             }
             .intro-title span {
-                color: #ffd700; /* Wincash Gold highlighted part */
+                color: #ffd700; 
                 text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
             }
             .intro-tagline {
                 font-size: 14px;
-                color: #94a3b8; /* Clear light slate text */
+                color: #94a3b8; 
                 font-weight: 500;
                 letter-spacing: 0.5px;
             }
 
-            /* 2. Modern Minimalist Login Form Design */
+            /* 2. Modern Minimalist Login Form Design with New Background Change Override */
             .login-card {
                 display: none;
                 background: #ffffff;
@@ -69,10 +67,22 @@ export function drawGamingUI() {
                 padding: 36px 24px;
                 width: 100%;
                 border: 1px solid #e2e8f0;
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Card shadow */
                 opacity: 0;
                 animation: fadeIn 0.4s ease 2.4s forwards;
             }
+
+            /* MAGIC TRICK: Login card aate hi pure screen ka background change karne ke liye */
+            .login-card-active-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: #f1f5f9 !important; /* Pure background ka naya clean rang */
+                z-index: -1;
+            }
+
             .login-heading {
                 font-size: 24px;
                 font-weight: 700;
@@ -93,7 +103,7 @@ export function drawGamingUI() {
             }
             .modern-input {
                 width: 100%;
-                background: #f8fafc;
+                background: #ffffff; /* Input background light theme ke hisab se safe white */
                 border: 1px solid #cbd5e1;
                 border-radius: 10px;
                 padding: 12px 14px;
@@ -104,7 +114,6 @@ export function drawGamingUI() {
             }
             .modern-input:focus {
                 border-color: #2563eb;
-                background: #ffffff;
                 box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
             }
 
@@ -169,12 +178,18 @@ export function drawGamingUI() {
         </style>
 
         <div class="auth-wrapper">
+            <!-- 1. Intro Screen Content -->
             <div id="intro-arena" class="intro-screen">
-                <div class="modern-logo-box">🎮</div> <h1 class="intro-title"><span>Win</span>cash</h1>
+                <div class="modern-logo-box">🎮</div> 
+                <h1 class="intro-title"><span>Win</span>cash</h1>
                 <p class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
             </div>
 
+            <!-- 2. Clean Minimal Login Form -->
             <div id="login-arena" class="login-card">
+                <!-- Background Changer Element -->
+                <div class="login-card-active-bg"></div>
+
                 <h2 class="login-heading">Login</h2>
                 
                 <div class="input-group">
