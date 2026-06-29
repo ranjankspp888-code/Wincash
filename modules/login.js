@@ -1,29 +1,49 @@
 // GitHub Path: modules/login.js
-// Modern Trusted UI with Professional Light Background For Login Card
+// Seamless Transition UI - No Blinking, Pure Cinematic Fade Effect
 
 const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec"; 
 
 export function drawGamingUI() {
     return `
         <style>
-            /* Global Layout Config */
-            .auth-wrapper {
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-                width: 100%;
-                max-width: 360px;
+            /* Fixed Global Background - No flashes between states */
+            .auth-screen-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: #f1f5f9; /* Professional Light Background */
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                overflow: hidden;
             }
 
-            /* 1. 2-Second Intro Splash Screen */
+            .auth-wrapper {
+                position: relative;
+                width: 100%;
+                max-width: 360px;
+                padding: 20px;
+            }
+
+            /* 1. Cinematic Intro Overlay (No Blink Setup) */
             .intro-screen {
-                text-align: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #0d0e15; /* Elegant Dark Intro Layer */
+                border-radius: 16px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                animation: fadeOut 0.5s ease 2s forwards;
+                z-index: 10; /* Login ke upar baithega */
+                transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                padding: 36px 24px;
             }
             
             .modern-logo-box {
@@ -46,11 +66,9 @@ export function drawGamingUI() {
                 color: #ffffff; 
                 margin-bottom: 10px;
                 letter-spacing: 1px;
-                text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
             }
             .intro-title span {
                 color: #ffd700; 
-                text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
             }
             .intro-tagline {
                 font-size: 14px;
@@ -59,28 +77,15 @@ export function drawGamingUI() {
                 letter-spacing: 0.5px;
             }
 
-            /* 2. Modern Minimalist Login Form Design with New Background Change Override */
+            /* 2. Login Form Card (Pre-rendered underneath) */
             .login-card {
-                display: none;
                 background: #ffffff;
                 border-radius: 16px;
                 padding: 36px 24px;
                 width: 100%;
                 border: 1px solid #e2e8f0;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Card shadow */
-                opacity: 0;
-                animation: fadeIn 0.4s ease 2.4s forwards;
-            }
-
-            /* MAGIC TRICK: Login card aate hi pure screen ka background change karne ke liye */
-            .login-card-active-bg {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: #f1f5f9 !important; /* Pure background ka naya clean rang */
-                z-index: -1;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                z-index: 1; /* Niche pehle se ready hai */
             }
 
             .login-heading {
@@ -103,7 +108,7 @@ export function drawGamingUI() {
             }
             .modern-input {
                 width: 100%;
-                background: #ffffff; /* Input background light theme ke hisab se safe white */
+                background: #ffffff;
                 border: 1px solid #cbd5e1;
                 border-radius: 10px;
                 padding: 12px 14px;
@@ -117,7 +122,7 @@ export function drawGamingUI() {
                 box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
             }
 
-            /* Professional Submit Button */
+            /* Button Setup */
             .submit-btn {
                 background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
                 border: none;
@@ -141,7 +146,6 @@ export function drawGamingUI() {
                 cursor: not-allowed;
             }
 
-            /* Please Wait Spinner */
             .btn-spinner {
                 display: none;
                 width: 18px;
@@ -152,20 +156,15 @@ export function drawGamingUI() {
                 animation: spin 0.8s linear infinite;
             }
 
-            /* Animations Engine */
-            @keyframes fadeOut {
-                to { opacity: 0; display: none; visibility: hidden; height: 0; padding: 0; margin: 0; }
+            /* Smooth Hide Class Triggered by JS */
+            .intro-hidden {
+                opacity: 0 !important;
+                transform: scale(0.95) translateY(-10px); /* Halki flight upar ki taraf bina jhatke ke */
+                pointer-events: none;
             }
-            @keyframes fadeIn {
-                to { opacity: 1; display: block; }
-            }
-            @keyframes spin {
-                to { transform: rotate(360deg); }
-            }
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                100% { transform: scale(1.05); }
-            }
+
+            @keyframes spin { to { transform: rotate(360deg); } }
+            @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
             .error-box {
                 color: #dc2626;
@@ -177,37 +176,38 @@ export function drawGamingUI() {
             }
         </style>
 
-        <div class="auth-wrapper">
-            <!-- 1. Intro Screen Content -->
-            <div id="intro-arena" class="intro-screen">
-                <div class="modern-logo-box">🎮</div> 
-                <h1 class="intro-title"><span>Win</span>cash</h1>
-                <p class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
-            </div>
-
-            <!-- 2. Clean Minimal Login Form -->
-            <div id="login-arena" class="login-card">
-                <!-- Background Changer Element -->
-                <div class="login-card-active-bg"></div>
-
-                <h2 class="login-heading">Login</h2>
+        <div class="auth-screen-container">
+            <div class="auth-wrapper">
                 
-                <div class="input-group">
-                    <label>User ID / Mobile Number</label>
-                    <input type="number" id="login-mobile" class="modern-input" placeholder="Enter your registered number" required>
+                <!-- Intro Layer: Baad me bas ye smooth fadeout hoga -->
+                <div id="intro-arena" class="intro-screen">
+                    <div class="modern-logo-box">🎮</div> 
+                    <h1 class="intro-title"><span>Win</span>cash</h1>
+                    <p class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
                 </div>
 
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="login-pass" class="modern-input" placeholder="Enter your password" required>
+                <!-- Login Layer: Jo peeche hi baitha hai bina blink kiye -->
+                <div class="login-card">
+                    <h2 class="login-heading">Login</h2>
+                    
+                    <div class="input-group">
+                        <label>User ID / Mobile Number</label>
+                        <input type="number" id="login-mobile" class="modern-input" placeholder="Enter your registered number" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-pass" class="modern-input" placeholder="Enter your password" required>
+                    </div>
+
+                    <button id="auth-submit-btn" class="submit-btn">
+                        <div id="btn-loader" class="btn-spinner"></div>
+                        <span id="btn-text">Submit</span>
+                    </button>
+                    
+                    <div id="login-error" class="error-box"></div>
                 </div>
 
-                <button id="auth-submit-btn" class="submit-btn">
-                    <div id="btn-loader" class="btn-spinner"></div>
-                    <span id="btn-text">Submit</span>
-                </button>
-                
-                <div id="login-error" class="error-box"></div>
             </div>
         </div>
     `;
@@ -215,15 +215,18 @@ export function drawGamingUI() {
 
 export function bindGameLogic() {
     const introArena = document.getElementById('intro-arena');
-    const loginArena = document.getElementById('login-arena');
     const btn = document.getElementById('auth-submit-btn');
     const loader = document.getElementById('btn-loader');
     const btnText = document.getElementById('btn-text');
     const errorDiv = document.getElementById('login-error');
 
+    // 2.2 Second baad bina blink kiye ek dum smooth dissolve (fade out) effect
     setTimeout(() => {
-        if(introArena) introArena.style.display = 'none';
-        if(loginArena) loginArena.style.display = 'block';
+        if (introArena) {
+            introArena.classList.add('intro-hidden');
+            // Animation poori hone ke baad remove karna taaki HTML clean rahe
+            setTimeout(() => introArena.remove(), 600);
+        }
     }, 2200);
 
     btn.addEventListener('click', async () => {
