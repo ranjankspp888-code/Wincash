@@ -5,67 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wincash</title>
     <style>
-        /* Modern App Shell Core Styling */
+        /* Core Styling */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body, html { width: 100%; height: 100%; background: #0f172a; color: #ffffff; overflow: hidden; }
         
         .app-shell { display: flex; flex-direction: column; height: 100vh; width: 100%; position: relative; }
         
-        /* 1. Locked Top Header */
-        .app-header { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
-            background: #1e1b4b; border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-            display: none; justify-content: space-between; align-items: center; 
-            padding: 0 16px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
+        /* Permanent Header & Footer Navigation */
+        .app-header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: #1e1b4b; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: none; justify-content: space-between; align-items: center; padding: 0 16px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .user-meta { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #f1f5f9; font-size: 14px; }
-        .wallet-container { 
-            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #0f172a; 
-            padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; 
-            display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(234, 179, 8, 0.25); 
-        }
-
-        /* 2. Scrollable Middle Content Viewport */
-        .app-body { 
-            flex: 1; width: 100%; margin-top: 0px; margin-bottom: 0px; 
-            overflow-y: auto; background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);
-            display: flex; flex-direction: column; align-items: center;
-        }
+        .wallet-container { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #0f172a; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(234, 179, 8, 0.25); }
+        .app-body { flex: 1; width: 100%; margin-top: 0px; margin-bottom: 0px; overflow-y: auto; background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%); display: flex; flex-direction: column; align-items: center; }
         .content-padding { padding-top: 80px; padding-bottom: 90px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-
-        /* 3. Locked Bottom Navigation Footer */
-        .app-footer { 
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; 
-            z-index: 1000; background: #1e1b4b; border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: none; justify-content: space-around; align-items: center;
-            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
-        }
-        .nav-item {
-            background: transparent; border: none; color: #94a3b8; font-size: 11px; font-weight: 700; 
-            text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
-            text-decoration: none; flex: 1; cursor: pointer;
-        }
+        .app-footer { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; z-index: 1000; background: #1e1b4b; border-top: 1px solid rgba(255, 255, 255, 0.1); display: none; justify-content: space-around; align-items: center; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4); }
+        .nav-item { background: transparent; border: none; color: #94a3b8; font-size: 11px; font-weight: 700; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; flex: 1; cursor: pointer; }
         .nav-item.active { color: #facc15; transform: translateY(-1px); }
         .nav-icon { font-size: 20px; }
 
-        /* --- LOGIN & INTRO PAGE SYSTEM --- */
-        .auth-screen-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f5f9; display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        /* AUTH CONTAINER & SYSTEMS */
+        .auth-screen-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f5f9; display: flex; align-items: center; justify-content: center; z-index: 2000; overflow-y: auto; }
+        .container-box { width: 100%; max-width: 360px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .app-branding-section { display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateY(110px); transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); z-index: 5; }
         .modern-logo-box { width: 76px; height: 76px; background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(218, 165, 32, 0.25); font-size: 36px; }
         .intro-title { font-size: 30px; font-weight: 800; color: #1e293b; margin-top: 14px; }
         .intro-title span { color: #b8860b; }
         .intro-tagline { font-size: 13px; color: #64748b; font-weight: 500; margin-top: 4px; transition: opacity 0.4s ease; }
-        .login-card { background: #ffffff; border-radius: 16px; padding: 32px 24px; width: 320px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04); transform: translateY(40px); opacity: 0; visibility: hidden; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease; z-index: 2; }
-        .branding-slide-up { transform: translateY(-20px) scale(0.9); }
+        
+        .login-card { background: #ffffff; border-radius: 16px; padding: 32px 24px; width: 100%; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04); transform: translateY(40px); opacity: 0; visibility: hidden; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease; z-index: 2; display: none; }
+        .branding-slide-up { transform: translateY(-10px) scale(0.85); }
         .tagline-fade-out { opacity: 0; }
-        .login-slide-up { transform: translateY(-10px); opacity: 1; visibility: visible; }
-        .input-group { margin-bottom: 18px; text-align: left; width: 100%; }
-        .input-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; }
-        .modern-input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px 14px; color: #1e293b; font-size: 15px; outline: none; }
-        .submit-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; color: #ffffff; padding: 14px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .login-slide-up { transform: translateY(-5px); opacity: 1; visibility: visible; display: block; }
+        
+        .input-group { margin-bottom: 14px; text-align: left; width: 100%; }
+        .input-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 5px; }
+        .modern-input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 11px 14px; color: #1e293b; font-size: 14px; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; color: #ffffff; padding: 14px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;}
         .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #ffffff; animation: spin 0.8s linear infinite; }
+        
+        .toggle-link { font-size: 13px; color: #2563eb; font-weight: 600; text-align: center; margin-top: 16px; cursor: pointer; display: block; }
 
-        /* --- HOME/SPIN WHEEL SYSTEM --- */
+        /* REGISTRATION DYNAMIC POPUP DIALOG */
+        .reg-popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .reg-popup-card { background: #ffffff; width: 100%; max-width: 330px; border-radius: 20px; padding: 28px 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 2px solid #ca8a04; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .popup-success-badge { width: 56px; height: 56px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto; }
+        .credential-box { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 14px; margin: 18px 0; text-align: left; }
+        .credential-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
+        .credential-row:last-child { margin-bottom: 0; }
+        
+        /* APP ENGINE SUBSYSTEMS */
         .wheel-outer-ring { position: relative; width: 290px; height: 290px; margin: 20px auto; background: #ffffff; border-radius: 50%; padding: 8px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.04); }
         .zupee-pointer { position: absolute; top: -10px; left: calc(50% - 14px); z-index: 20; width: 28px; height: 28px; background: #ef4444; clip-path: polygon(50% 100%, 0 0, 100% 0); }
         .wheel-center-cap { position: absolute; top: calc(50% - 22px); left: calc(50% - 22px); width: 44px; height: 44px; background: #ffffff; border: 4px solid #1e1b4b; border-radius: 50%; z-index: 15; }
@@ -73,28 +60,46 @@
         .wheel-slice-item { position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 24px; font-size: 15px; font-weight: 800; }
         .spin-trigger-btn { background: linear-gradient(180deg, #facc15 0%, #eab308 100%); border: none; color: #0f172a; padding: 16px; font-size: 18px; font-weight: 700; border-radius: 12px; cursor: pointer; width: 290px; box-shadow: 0 6px 20px rgba(234, 179, 8, 0.3); border-bottom: 4px solid #ca8a04; text-align: center; }
         .overlay-ad-loader { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.98); z-index: 10000; justify-content: center; align-items: center; flex-direction: column; }
-        
-        /* --- REFER & EARN SYSTEM --- */
-        .refer-container { width: 100%; max-width: 360px; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+        .refer-container, .manage-container { width: 100%; max-width: 360px; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
         .stats-row { display: flex; gap: 12px; width: 100%; }
         .stat-card { flex: 1; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); padding: 16px; border-radius: 12px; text-align: center; }
         .stat-val { font-size: 20px; font-weight: 800; color: #facc15; margin-top: 4px; }
         .code-card { background: #ffffff; color: #0f172a; padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
         .real-code { font-size: 24px; font-weight: 800; color: #1e1b4b; margin: 10px 0; letter-spacing: 1px; }
-
-        /* --- MANAGE SYSTEM --- */
-        .manage-container { width: 100%; max-width: 360px; padding: 0 16px; display: flex; flex-direction: column; gap: 18px; }
         .section-card { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); padding: 18px; border-radius: 12px; text-align: left;}
         .section-head { font-size: 15px; font-weight: 700; color: #facc15; margin-bottom: 12px; }
         .history-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 13px;}
         .support-link-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 10px; color: #fff; text-decoration: none; font-weight: 600; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <!-- 1. INTRO / SPLASH OVERLAY SCREEN -->
+    <!-- CUSTOM HTML REGISTRATION SUCCESS DIALOG POP-UP -->
+    <div id="registration-popup-modal" class="reg-popup-overlay">
+        <div class="reg-popup-card">
+            <div class="popup-success-badge">✓</div>
+            <h3 style="color: #0f172a; font-size: 20px; font-weight: 700;">Account Created!</h3>
+            <p style="color: #64748b; font-size: 13px; margin-top: 4px;">Take a screenshot to keep your secure login credentials safe.</p>
+            
+            <div class="credential-box">
+                <div class="credential-row">
+                    <span style="color:#64748b; font-weight:600;">User ID/Mobile:</span>
+                    <span id="pop-userid" style="color:#0f172a; font-weight:700;">-</span>
+                </div>
+                <div class="credential-row">
+                    <span style="color:#64748b; font-weight:600;">Secure Password:</span>
+                    <span id="pop-pass" style="color:#1e3a8a; font-weight:700;">-</span>
+                </div>
+            </div>
+
+            <button onclick="closeRegModal()" class="submit-btn" style="margin-top: 0;">Continue to Login</button>
+        </div>
+    </div>
+
+    <!-- MAIN BRAND SPLASH/LOGIN/REGISTER LAYOUT SYSTEM -->
     <div id="intro-screen-layer" class="auth-screen-container">
         <div class="container-box">
             <div id="brand-layer" class="app-branding-section">
@@ -102,26 +107,57 @@
                 <h1 class="intro-title"><span>Win</span>cash</h1>
                 <p id="tagline-layer" class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
             </div>
+
+            <!-- VIEW 1: SIGN IN PAGE -->
             <div id="login-layer" class="login-card">
-                <h2 style="color:#0f172a; margin-bottom:20px; font-size:22px;">Login</h2>
+                <h2 style="color:#0f172a; margin-bottom:18px; font-size:22px;">Login</h2>
                 <div class="input-group">
                     <label>User ID / Mobile Number</label>
-                    <input type="number" id="login-mobile" class="modern-input" placeholder="Enter register number">
+                    <input type="number" id="login-mobile" class="modern-input" placeholder="Enter registered number">
                 </div>
                 <div class="input-group">
                     <label>Password</label>
                     <input type="password" id="login-pass" class="modern-input" placeholder="Enter password">
                 </div>
+                <span onclick="triggerForgetPassword()" style="font-size:12px; color:#ef4444; font-weight:600; float:right; margin-top:-8px; margin-bottom:12px; cursor:pointer;">Forget Password?</span>
                 <button id="auth-submit-btn" class="submit-btn">
                     <div id="btn-loader" class="btn-spinner"></div>
                     <span id="btn-text">Submit</span>
                 </button>
-                <div id="login-error" style="color:red; font-size:12px; margin-top:10px; text-align:center;"></div>
+                <span onclick="toggleAuthView('register')" class="toggle-link">Create Account / Register Here</span>
+                <div id="login-error" style="color:red; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
+            </div>
+
+            <!-- VIEW 2: SIGN UP / REGISTRATION WITH REFERRAL BOX -->
+            <div id="register-layer" class="login-card">
+                <h2 style="color:#0f172a; margin-bottom:18px; font-size:22px;">Register</h2>
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" class="modern-input" placeholder="Enter your full name">
+                </div>
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <input type="number" id="reg-mobile" class="modern-input" placeholder="Enter 10-digit number">
+                </div>
+                <div class="input-group">
+                    <label>Create Secure Password</label>
+                    <input type="password" id="reg-pass" class="modern-input" placeholder="Create strong password">
+                </div>
+                <div class="input-group">
+                    <label>Referral Code (Optional)</label>
+                    <input type="text" id="reg-refer" class="modern-input" style="border-color:#eab308; background:#fef08a10;" placeholder="Enter referral code">
+                </div>
+                <button id="register-submit-btn" class="submit-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <div id="reg-btn-loader" class="btn-spinner"></div>
+                    <span id="reg-btn-text">Create Account</span>
+                </button>
+                <span onclick="toggleAuthView('login')" class="toggle-link">Already have an account? Login</span>
+                <div id="reg-error" style="color:red; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
             </div>
         </div>
     </div>
 
-    <!-- 2. CORE SYSTEM SHELL -->
+    <!-- CORE INTERNAL APPLICATION LOCK CONTAINER SHELL -->
     <div class="app-shell">
         <header id="global-header" class="app-header">
             <div class="user-meta">👤 <span id="header-username">User</span></div>
@@ -139,26 +175,33 @@
         </footer>
     </div>
 
-    <!-- 3. AD MODAL OVERLAY -->
-    <div id="ad-gate-overlay" class="overlay-ad-loader">
-        <div style="border: 4px solid rgba(234, 179, 8, 0.1); border-left-color: #eab308; width: 44px; height: 44px; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px;"></div>
-        <h3 style="color:#fff;">Streaming Reward Video Ad...</h3>
-        <p style="color:#64748b; margin-top:6px; font-size:13px;">Rewards automatically lock in after preview</p>
-    </div>
-
-    <!-- CODE SCRIPT LOGIC ENGINE -->
     <script>
         const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec";
         let localUser = null;
 
-        // Intro Logic Trigger
+        // Transitions Splash Intro screen engine
         setTimeout(() => {
             document.getElementById('brand-layer').classList.add('branding-slide-up');
             document.getElementById('tagline-layer').classList.add('tagline-fade-out');
             document.getElementById('login-layer').classList.add('login-slide-up');
         }, 2000);
 
-        // Login Submit Process
+        // Switch between Login and Registration views seamlessly
+        function toggleAuthView(view) {
+            document.getElementById('login-error').innerText = "";
+            document.getElementById('reg-error').innerText = "";
+            if(view === 'register') {
+                document.getElementById('login-layer').style.display = "none";
+                document.getElementById('register-layer').style.display = "block";
+                document.getElementById('register-layer').style.opacity = "1";
+                document.getElementById('register-layer').style.visibility = "visible";
+            } else {
+                document.getElementById('register-layer').style.display = "none";
+                document.getElementById('login-layer').style.display = "block";
+            }
+        }
+
+        // Logic 1: Process User Verification Login
         document.getElementById('auth-submit-btn').addEventListener('click', async () => {
             const mobile = document.getElementById('login-mobile').value;
             const pass = document.getElementById('login-pass').value;
@@ -173,20 +216,13 @@
                 
                 if(result.data.success) {
                     localUser = result.data.userData;
-                    document.getElementById('intro-screen-layer').style.display = "none";
-                    document.getElementById('global-header').style.display = "flex";
-                    document.getElementById('app-nav').style.display = "flex";
-                    
-                    document.getElementById('header-username').innerText = localUser.name || localUser.mobileNumber;
-                    document.getElementById('header-wallet').innerText = `₹${Number(localUser.walletBalance).toFixed(2)}`;
-                    
-                    switchView('home');
+                    launchAppEnvironment();
                 } else {
                     document.getElementById('login-error').innerText = result.data.message;
                     resetLoginBtn();
                 }
             } catch(e) {
-                document.getElementById('login-error').innerText = "Network Error";
+                document.getElementById('login-error').innerText = "Network Gateway Timeout";
                 resetLoginBtn();
             }
         });
@@ -196,7 +232,71 @@
             document.getElementById('btn-text').innerText = "Submit";
         }
 
-        // View Router Switching Engine
+        // Logic 2: Registration Submission Engine 
+        document.getElementById('register-submit-btn').addEventListener('click', async () => {
+            const name = document.getElementById('reg-name').value;
+            const mobile = document.getElementById('reg-mobile').value;
+            const pass = document.getElementById('reg-pass').value;
+            const referCode = document.getElementById('reg-refer').value;
+
+            if(!name || !mobile || !pass) {
+                document.getElementById('reg-error').innerText = "⚠️ Please fill all required fields.";
+                return;
+            }
+
+            document.getElementById('reg-btn-loader').style.display = "block";
+            document.getElementById('reg-btn-text').innerText = "Registering...";
+
+            try {
+                // Backend call triggered for processing account sign up configurations
+                let res = await fetch(BACKEND_GATEWAY, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ 
+                        action: "registerNewUser", 
+                        payload: { name: name, mobileNumber: mobile, password: pass, appliedReferral: referCode } 
+                    })
+                });
+                let result = await res.json();
+
+                if(result.data.success) {
+                    // Injecting strings inside custom html notification box modal
+                    document.getElementById('pop-userid').innerText = mobile;
+                    document.getElementById('pop-pass').innerText = pass;
+                    document.getElementById('registration-popup-modal').style.display = "flex";
+                } else {
+                    document.getElementById('reg-error').innerText = result.data.message;
+                    resetRegBtn();
+                }
+            } catch(e) {
+                document.getElementById('reg-error').innerText = "📡 Cloud deployment pipeline latency error.";
+                resetRegBtn();
+            }
+        });
+
+        function resetRegBtn() {
+            document.getElementById('reg-btn-loader').style.display = "none";
+            document.getElementById('reg-btn-text').innerText = "Create Account";
+        }
+
+        function closeRegModal() {
+            document.getElementById('registration-popup-modal').style.display = "none";
+            toggleAuthView('login');
+        }
+
+        function triggerForgetPassword() {
+            alert("🔒 Identity Verification Link: Please trigger password restoration requests via email at: wincashhelp@gmail.com with your registered user profile parameters.");
+        }
+
+        function launchAppEnvironment() {
+            document.getElementById('intro-screen-layer').style.display = "none";
+            document.getElementById('global-header').style.display = "flex";
+            document.getElementById('app-nav').style.display = "flex";
+            document.getElementById('header-username').innerText = localUser.name || localUser.mobileNumber;
+            document.getElementById('header-wallet').innerText = `₹${Number(localUser.walletBalance).toFixed(2)}`;
+            switchView('home');
+        }
+
+        // Internal View Port Manager Core Grid
         async function switchView(target) {
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             const viewport = document.getElementById('dynamic-content-viewport');
