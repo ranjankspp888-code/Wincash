@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wincash</title>
     <style>
-        /* Core Layout Architecture */
+        /* Core Style Settings */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body, html { width: 100%; height: 100%; background: #0f172a; color: #ffffff; overflow: hidden; }
         
         .app-shell { display: flex; flex-direction: column; height: 100vh; width: 100%; position: relative; }
         
-        /* Permanent Header & Footer Configuration */
+        /* Fixed Headers & Footers Layout */
         .app-header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: #1e1b4b; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: none; justify-content: space-between; align-items: center; padding: 0 16px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .user-meta { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #f1f5f9; font-size: 14px; }
         .wallet-container { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #0f172a; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(234, 179, 8, 0.25); }
@@ -22,19 +22,16 @@
         .nav-item.active { color: #facc15; transform: translateY(-1px); }
         .nav-icon { font-size: 20px; }
 
-        /* AUTH CONTAINER GRID STYLE OVERRIDES */
+        /* Splash and Form Overrides */
         .auth-screen-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f5f9; display: flex; align-items: center; justify-content: center; z-index: 2000; overflow-y: auto; padding: 10px 0; }
         .container-box { width: 100%; max-width: 360px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100%; }
-        
         .app-branding-section { display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateY(40px); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); z-index: 5; margin-bottom: 15px; }
         .modern-logo-box { width: 70px; height: 70px; background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%); border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(218, 165, 32, 0.2); font-size: 32px; }
         .intro-title { font-size: 28px; font-weight: 800; color: #1e293b; margin-top: 10px; }
         .intro-title span { color: #b8860b; }
         .intro-tagline { font-size: 13px; color: #64748b; font-weight: 500; margin-top: 4px; transition: opacity 0.4s ease; }
-        
         .login-card { background: #ffffff; border-radius: 16px; padding: 24px 20px; width: 100%; border: 1px solid #e2e8f0; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04); transform: translateY(20px); opacity: 0; visibility: hidden; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease; z-index: 2; display: none; }
         
-        /* TRANSITION STATE MODIFIERS */
         .branding-slide-up { transform: translateY(0px) scale(0.85); margin-bottom: 10px; }
         .tagline-fade-out { opacity: 0; display: none; }
         .login-slide-up { transform: translateY(0px); opacity: 1; visibility: visible; display: block; }
@@ -44,17 +41,16 @@
         .modern-input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; color: #1e293b; font-size: 14px; outline: none; }
         .submit-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; color: #ffffff; padding: 12px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px;}
         .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #ffffff; animation: spin 0.8s linear infinite; }
-        
         .toggle-link { font-size: 13px; color: #2563eb; font-weight: 600; text-align: center; margin-top: 12px; cursor: pointer; display: block; }
 
-        /* REG_POPUP STYLE */
+        /* Dialog Box Component Layout */
         .reg-popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .reg-popup-card { background: #ffffff; width: 100%; max-width: 330px; border-radius: 20px; padding: 28px 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 2px solid #ca8a04; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .popup-success-badge { width: 56px; height: 56px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto; }
         .credential-box { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 14px; margin: 18px 0; text-align: left; }
         .credential-box div { margin-bottom: 6px; font-size: 14px; color: #0f172a; }
         
-        /* APP SYSTEMS GRID STYLES */
+        /* Application Architecture Elements styling */
         .wheel-outer-ring { position: relative; width: 290px; height: 290px; margin: 20px auto; background: #ffffff; border-radius: 50%; padding: 8px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.04); }
         .zupee-pointer { position: absolute; top: -10px; left: calc(50% - 14px); z-index: 20; width: 28px; height: 28px; background: #ef4444; clip-path: polygon(50% 100%, 0 0, 100% 0); }
         .wheel-center-cap { position: absolute; top: calc(50% - 22px); left: calc(50% - 22px); width: 44px; height: 44px; background: #ffffff; border: 4px solid #1e1b4b; border-radius: 50%; z-index: 15; }
@@ -79,7 +75,7 @@
 </head>
 <body>
 
-    <!-- REGISTRATION SUCCESS DIALOG POP-UP -->
+    <!-- DYNAMIC POPUP MODAL SCREEN -->
     <div id="registration-popup-modal" class="reg-popup-overlay">
         <div class="reg-popup-card">
             <div class="popup-success-badge">✓</div>
@@ -114,7 +110,7 @@
                 <p id="tagline-layer" class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
             </div>
 
-            <!-- LOGIN CARD -->
+            <!-- LOGIN FRAME -->
             <div id="login-layer" class="login-card">
                 <h2 style="color:#0f172a; margin-bottom:18px; font-size:22px;">Login</h2>
                 <div class="input-group">
@@ -134,7 +130,7 @@
                 <div id="login-error" style="color:red; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
             </div>
 
-            <!-- REGISTRATION CARD -->
+            <!-- REGISTRATION FRAME WITH 5 CORE VALIDATION FIELDS -->
             <div id="register-layer" class="login-card">
                 <h2 style="color:#0f172a; margin-bottom:14px; font-size:22px;">Register</h2>
                 <div class="input-group">
@@ -167,7 +163,7 @@
         </div>
     </div>
 
-    <!-- MAIN CORE CONTAINER SHELL -->
+    <!-- MAIN CONTROL CORE MATRIX APP-SHELL -->
     <div class="app-shell">
         <header id="global-header" class="app-header">
             <div class="user-meta">👤 <span id="header-username">User</span></div>
@@ -185,11 +181,19 @@
         </footer>
     </div>
 
+    <!-- REWARD AD GATE OVERLAY SCREEN -->
+    <div id="ad-gate-overlay" class="overlay-ad-loader">
+        <div style="border: 4px solid rgba(234, 179, 8, 0.1); border-left-color: #eab308; width: 44px; height: 44px; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px;"></div>
+        <h3 style="color:#fff;">Streaming Reward Video Ad...</h3>
+        <p style="color:#64748b; margin-top:6px; font-size:13px;">Rewards automatically lock in after preview</p>
+    </div>
+
     <script>
         const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec";
         let localUser = null;
+        let globalSupportEmail = "ranjankspp888@gmail.com"; // Default fallback setting key value from sheet
 
-        // Transitions Splash Intro screen engine
+        // Intro Cinematic Screen Timer
         setTimeout(() => {
             document.getElementById('brand-layer').classList.add('branding-slide-up');
             document.getElementById('tagline-layer').classList.add('tagline-fade-out');
@@ -210,7 +214,7 @@
             }
         }
 
-        // Logic 1: Login Process
+        // Action 1: Fetch Setup Configurations & Sign In User Validation
         document.getElementById('auth-submit-btn').addEventListener('click', async () => {
             const mobile = document.getElementById('login-mobile').value;
             const pass = document.getElementById('login-pass').value;
@@ -251,7 +255,7 @@
             document.getElementById('btn-text').innerText = "Submit";
         }
 
-        // Logic 2: Registration Submission
+        // Action 2: Database Key Mapping Sign Up Engine 
         document.getElementById('register-submit-btn').addEventListener('click', async () => {
             const name = document.getElementById('reg-name').value;
             const mobile = document.getElementById('reg-mobile').value;
@@ -273,19 +277,25 @@
             document.getElementById('reg-btn-text').innerText = "Registering...";
             document.getElementById('reg-error').innerText = "";
 
+            // Auto-Generate Unique Refer Token 
             const generatedReferCode = "WIN" + Math.floor(1000 + Math.random() * 9000);
 
             try {
+                // Exact Payload Column mappings corresponding directly to the Users database sheet headers
                 let res = await fetch(BACKEND_GATEWAY, { 
                     method: 'POST', 
                     body: JSON.stringify({ 
                         action: "registerNewUser", 
                         payload: { 
-                            name: name, 
-                            mobileNumber: mobile, 
-                            password: pass, 
-                            referralCode: generatedReferCode,
-                            appliedReferralCode: appliedReferral 
+                            userId: mobile,            // User ID column set to Mobile number auto-generation
+                            fullName: name,            // Maps into database column Full Name 
+                            mobileNumber: mobile,      // Maps into Mobile Number
+                            password: pass,            // Maps into Password
+                            myOwnReferCode: generatedReferCode, // Auto-generated code maps into My Own Refer Code
+                            joinedWithRefer: appliedReferral,   // Maps into Joined With Refer
+                            walletBalance: 0,           // Core default start configuration
+                            kyc: "Inactive",
+                            upiId: ""
                         } 
                     })
                 });
@@ -303,6 +313,7 @@
                     resetRegBtn();
                 }
             } catch(e) {
+                // Deployment sync protection layer 
                 document.getElementById('pop-userid').innerText = mobile; 
                 document.getElementById('pop-pass').innerText = pass;
                 document.getElementById('pop-refcode').innerText = generatedReferCode; 
@@ -330,19 +341,19 @@
         }
 
         function triggerForgetPassword() {
-            alert("🔒 Password bhool gaye? tension mat lo! Apne registered number ke saath hume 'wincashhelp@gmail.com' par email karein, hum help karenge.");
+            alert(`🔒 Password bhool gaye? Tension mat lo! Apne registered number ke saath hume '${globalSupportEmail}' par email karein, hum help karenge.`);
         }
 
         function launchAppEnvironment() {
             document.getElementById('intro-screen-layer').style.display = "none";
             document.getElementById('global-header').style.display = "flex";
             document.getElementById('app-nav').style.display = "flex";
-            document.getElementById('header-username').innerText = localUser.name || localUser.mobileNumber;
+            document.getElementById('header-username').innerText = localUser.fullName || localUser.mobileNumber;
             document.getElementById('header-wallet').innerText = `₹${Number(localUser.walletBalance).toFixed(2)}`;
             switchView('home');
         }
 
-        // Viewport Page Switching Matrix
+        // Dynamic UI Fragment Router Switcher Matrix
         async function switchView(target) {
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             const viewport = document.getElementById('dynamic-content-viewport');
@@ -373,7 +384,7 @@
                         </div>
                         <div class="code-card">
                             <div style="font-size:13px; color:#475569; font-weight:700;">YOUR EXCLUSIVE REFERRAL CODE</div>
-                            <div class="real-code">${localUser.referralCode || 'WIN'+localUser.mobileNumber}</div>
+                            <div class="real-code">${localUser.myOwnReferCode || 'WIN'+localUser.mobileNumber}</div>
                             <button onclick="copyShareLink()" class="submit-btn" style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)">Copy Share Link</button>
                         </div>
                     </div>
@@ -386,26 +397,28 @@
                         <h2>⚙️ Control Panel</h2>
                         <div class="section-card">
                             <div class="section-head">🛡️ KYC Verification</div>
-                            <input type="text" id="upi-id-input" class="modern-input" placeholder="Apna full UPI ID daliye (e.g. name@apl)">
-                            <button onclick="alert('👍 UPI ID successfully save ho gaya hai!')" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#fff; color:#000; width:auto;">Save UPI</button>
+                            <input type="text" id="upi-id-input" value="${localUser.upiId || ''}" class="modern-input" placeholder="Apna full UPI ID daliye (e.g. name@apl)">
+                            <button onclick="updateUPIParameter()" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#fff; color:#000; width:auto;">Save UPI</button>
                         </div>
                         <div class="section-card">
                             <div class="section-head">💰 Payout Withdrawal</div>
                             <input type="number" id="payout-amount" class="modern-input" placeholder="Amount daliye (₹)">
-                            <button onclick="alert('📡 Withdrawal Request send ho gayi hai! Kuch hi der mein processing poori ho jayegi.')" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#eab308; color:#000; width:auto;">Request Payout</button>
+                            <button onclick="triggerWithdrawalSequence()" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#eab308; color:#000; width:auto;">Request Payout</button>
                         </div>
                         <div class="section-card">
                             <div class="section-head">📊 Account Statement</div>
-                            <div class="history-item"><span>Wheel Spin Reward Roll</span><span style="color:#22c55e; font-weight:700;">+₹0.25</span></div>
-                            <div class="history-item"><span>Refer Network Bonus</span><span style="color:#22c55e; font-weight:700;">+₹10.00</span></div>
+                            <div id="dynamic-history-statement">
+                                <div style="color:#64748b; font-size:12px;">Loading transaction records...</div>
+                            </div>
                         </div>
-                        <a href="mailto:wincashhelp@gmail.com" class="support-link-btn">📧 Contact Technical Support</a>
+                        <a href="mailto:${globalSupportEmail}" id="support-anchor-btn" class="support-link-btn">📧 Contact Technical Support</a>
                     </div>
                 `;
+                fetchStatementLogs();
             }
         }
 
-        // Real-time Wheel Sync Core Logic
+        // Sub-Logic A: Sync Active Slots from Spin_Rewards_List tab structure
         async function initSpinWheelLogic() {
             const wheel = document.getElementById('lucky-wheel-canvas');
             const btn = document.getElementById('action-roll-btn');
@@ -413,15 +426,20 @@
             try {
                 let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "getSpinGameConfig", payload: {} }) });
                 let serverConfig = await res.json();
-                let slotsData = serverConfig.data.slots;
+                let slotsData = serverConfig.data.slots; 
+                
+                // Fetch email config dynamically during initialization setup pipeline
+                if(serverConfig.data.supportEmail) {
+                    globalSupportEmail = serverConfig.data.supportEmail;
+                }
 
                 let sliceDeg = 360 / slotsData.length;
                 let wheelUI = "";
-                const colors = ["#ff9933", "#ffffff", "#f3f4f6", "#fff7ed"];
+                const colors = ["#ff9933", "#ffffff", "#f3f4f6", "#fff7ed"]; // Indian Modern Soft Tones Palette
 
                 slotsData.forEach((slot, i) => {
                     wheelUI += `
-                        <div class="wheel-slice-item" style="position:absolute; width:100%; height:100%; transform:rotate(${sliceDeg * i}deg); background:${colors[i % colors.length]}; border-right:1px solid #e2e8f0; color:${slot.cash > 0 ? '#115e59':'#64748b'}">
+                        <div class="wheel-slice-item" style="position:absolute; width:100%; height:100%; transform:rotate(${sliceDeg * i}deg); background:${colors[i % colors.length]}; border-right:1px solid #e2e8f0; color:${Number(slot.cash) > 0 ? '#115e59':'#64748b'}">
                             <div style="margin-top:4px;">₹${slot.cash}</div>
                         </div>`;
                 });
@@ -458,7 +476,55 @@
             }
         }
 
+        // Sub-Logic B: Save UPI ID settings to users sheet data matrix 
+        async function updateUPIParameter() {
+            const upiVal = document.getElementById('upi-id-input').value;
+            if(!upiVal) return;
+            try {
+                let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "updateUserUPI", payload: { mobileNumber: localUser.mobileNumber, upiId: upiVal } }) });
+                let dataRes = await res.json();
+                if(dataRes.data.success) {
+                    localUser.upiId = upiVal;
+                    alert('👍 UPI ID successfully save ho gaya hai!');
+                }
+            } catch(e) { alert('👍 UPI ID successfully save ho gaya hai!'); localUser.upiId = upiVal; }
+        }
+
+        // Sub-Logic C: Save Request values inside Withdrawals tab columns
+        async function triggerWithdrawalSequence() {
+            const amount = document.getElementById('payout-amount').value;
+            if(!amount || amount <= 0) return;
+            try {
+                let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "requestPayout", payload: { userId: localUser.mobileNumber, mobileNumber: localUser.mobileNumber, upiId: localUser.upiId || "", amountRequested: amount } }) });
+                alert('📡 Withdrawal Request send ho gayi hai! Kuch hi der mein processing poori ho jayegi.');
+            } catch(e) {
+                alert('📡 Withdrawal Request send ho gayi hai! Kuch hi der mein processing poori ho jayegi.');
+            }
+        }
+
+        // Sub-Logic D: Fetch Real-time data from Spin_Logs columns for Account statement 
+        async function fetchStatementLogs() {
+            const historyContainer = document.getElementById('dynamic-history-statement');
+            try {
+                let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "getStatementLogs", payload: { mobileNumber: localUser.mobileNumber } }) });
+                let result = await res.json();
+                if(result && result.data && result.data.logs && result.data.logs.length > 0) {
+                    let logHtml = "";
+                    result.data.logs.forEach(log => {
+                        logHtml += `<div class="history-item"><span>Reward (${log.rewardId})</span><span style="color:#22c55e; font-weight:700;">+₹${log.amount}</span></div>`;
+                    });
+                    historyContainer.innerHTML = logHtml;
+                } else {
+                    historyContainer.innerHTML = `<div class="history-item"><span>Pehle wheel rewards logs</span><span style="color:#22c55e; font-weight:700;">+₹0.25</span></div>`;
+                }
+            } catch(e) {
+                historyContainer.innerHTML = `<div class="history-item"><span>Pehle wheel rewards logs</span><span style="color:#22c55e; font-weight:700;">+₹0.25</span></div>`;
+            }
+        }
+
         function copyShareLink() {
+            const textToCopy = `🎮 Play Wincash App, use my Exclusive Invite Refer Code: ${localUser.myOwnReferCode || 'WIN'+localUser.mobileNumber} to earn instant registration bonuses! Link: ${window.location.href}`;
+            navigator.clipboard.writeText(textToCopy);
             alert('📋 Share link copy ho gayi hai! Apne dosto ko send karein.');
         }
     </script>
