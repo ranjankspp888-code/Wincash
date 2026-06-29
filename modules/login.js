@@ -1,12 +1,12 @@
 // GitHub Path: modules/login.js
-// Modern Trusted UI with 2-Second Intro Splash Screen
+// Modern Trusted UI with Beautiful Logo & High-Visibility Gold/White Intro Text
 
 const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec"; 
 
 export function drawGamingUI() {
     return `
         <style>
-            /* Global Apple-Style Typography & Body Config */
+            /* Global Layout Config */
             .auth-wrapper {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 width: 100%;
@@ -16,46 +16,54 @@ export function drawGamingUI() {
                 justify-content: center;
             }
 
-            /* 1. 2-Second Intro Splash Screen Design */
+            /* 1. 2-Second Intro Splash Screen (High Visibility) */
             .intro-screen {
                 text-align: center;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                animation: fadeOut 0.5s ease 2s forwards; /* 2 second baad fade out */
+                animation: fadeOut 0.5s ease 2s forwards;
             }
-            .intro-logo {
-                width: 70px;
-                height: 70px;
-                background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-                border-radius: 18px;
-                color: #ffffff;
-                font-size: 28px;
-                font-weight: 700;
+            
+            /* Professional Shield & Controller Logo Icon */
+            .modern-logo-box {
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+                border-radius: 22px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-bottom: 20px;
-                box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+                margin-bottom: 24px;
+                box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+                font-size: 36px;
+                animation: pulse 1.5s infinite alternate;
             }
+            
+            /* Bright Gold & Premium White Text for High Contrast */
             .intro-title {
-                font-size: 28px;
+                font-size: 32px;
                 font-weight: 800;
-                color: #0f172a;
-                margin-bottom: 8px;
-                letter-spacing: -0.5px;
+                color: #ffffff; /* Pure White text */
+                margin-bottom: 10px;
+                letter-spacing: 1px;
+                text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+            }
+            .intro-title span {
+                color: #ffd700; /* Wincash Gold highlighted part */
+                text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
             }
             .intro-tagline {
                 font-size: 14px;
-                color: #64748b;
+                color: #94a3b8; /* Clear light slate text */
                 font-weight: 500;
-                letter-spacing: 0.2px;
+                letter-spacing: 0.5px;
             }
 
             /* 2. Modern Minimalist Login Form Design */
             .login-card {
-                display: none; /* Shuruat me hidden rahega */
+                display: none;
                 background: #ffffff;
                 border-radius: 16px;
                 padding: 36px 24px;
@@ -63,7 +71,7 @@ export function drawGamingUI() {
                 border: 1px solid #e2e8f0;
                 box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
                 opacity: 0;
-                animation: fadeIn 0.4s ease 2.4s forwards; /* Intro ke baad aane ke liye delay */
+                animation: fadeIn 0.4s ease 2.4s forwards;
             }
             .login-heading {
                 font-size: 24px;
@@ -145,6 +153,10 @@ export function drawGamingUI() {
             @keyframes spin {
                 to { transform: rotate(360deg); }
             }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                100% { transform: scale(1.05); }
+            }
 
             .error-box {
                 color: #dc2626;
@@ -158,8 +170,7 @@ export function drawGamingUI() {
 
         <div class="auth-wrapper">
             <div id="intro-arena" class="intro-screen">
-                <div class="intro-logo">₹</div>
-                <h1 class="intro-title">Wincash</h1>
+                <div class="modern-logo-box">🎮</div> <h1 class="intro-title"><span>Win</span>cash</h1>
                 <p class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
             </div>
 
@@ -195,7 +206,6 @@ export function bindGameLogic() {
     const btnText = document.getElementById('btn-text');
     const errorDiv = document.getElementById('login-error');
 
-    // 2 Second ke baad Intro ko gayab karke Login Page display karna
     setTimeout(() => {
         if(introArena) introArena.style.display = 'none';
         if(loginArena) loginArena.style.display = 'block';
@@ -210,7 +220,6 @@ export function bindGameLogic() {
             return;
         }
 
-        // Please Wait Loading State active karna
         btn.disabled = true;
         loader.style.display = "block";
         btnText.innerText = "Please Wait...";
@@ -229,7 +238,7 @@ export function bindGameLogic() {
 
             if (result.data.success) {
                 localStorage.setItem("game_user", JSON.stringify(result.data.userData));
-                window.location.hash = "#spin"; // Target dashboard redirect
+                window.location.hash = "#spin"; 
             } else {
                 errorDiv.innerText = result.data.message;
                 btn.disabled = false;
