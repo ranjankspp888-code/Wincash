@@ -1,5 +1,6 @@
 // GitHub Path: modules/login.js
 
+// ⚠️ MAKE SURE TO PASTE YOUR EXACT COPIED WEB APP DEPLOYMENT URL HERE:
 const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycb0uYQfYcFvNDI0161bAbLjRMxucj5-ecp4DxqZbHDXYBgJHNBxHmb0WuqTMIHu8buoYw/exec";
 
 export function drawLoginUI() {
@@ -66,6 +67,7 @@ export function drawLoginUI() {
                     <p id="tagline-layer" class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
                 </div>
 
+                <!-- LOGIN VIEW -->
                 <div id="login-layer" class="login-card">
                     <h2 style="color:#ffffff; margin-bottom:18px; font-size:22px;">Login</h2>
                     <div class="input-group">
@@ -84,6 +86,7 @@ export function drawLoginUI() {
                     <div id="login-error" style="color:#f87171; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
                 </div>
 
+                <!-- REGISTRATION VIEW -->
                 <div id="register-layer" class="login-card">
                     <h2 style="color:#ffffff; margin-bottom:14px; font-size:22px;">Register</h2>
                     <div class="input-group">
@@ -159,6 +162,7 @@ export function bindLoginLogic(onLoginSuccess) {
         try {
             let res = await fetch(BACKEND_GATEWAY, { 
                 method: 'POST', 
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ action: "processUserLogin", payload: { mobileNumber: mobile, password: pass } })
             });
             let result = await res.json();
@@ -174,7 +178,7 @@ export function bindLoginLogic(onLoginSuccess) {
         } catch(e) {
             document.getElementById('btn-loader').style.display = "none";
             document.getElementById('btn-text').innerText = "Submit";
-            document.getElementById('login-error').innerText = "❌ Connection timeout! Server did not respond.";
+            document.getElementById('login-error').innerText = "❌ Server network response mismatch.";
         }
     };
 
@@ -196,12 +200,14 @@ export function bindLoginLogic(onLoginSuccess) {
 
         document.getElementById('reg-btn-loader').style.display = "block";
         document.getElementById('reg-btn-text').innerText = "Registering...";
+        document.getElementById('reg-error').innerText = "";
 
         const generatedReferCode = "WIN" + Math.floor(1000 + Math.random() * 9000);
 
         try {
             let res = await fetch(BACKEND_GATEWAY, { 
                 method: 'POST', 
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ 
                     action: "registerNewUser", 
                     payload: { userId: mobile, fullName: name, mobileNumber: mobile, password: pass, myOwnReferCode: generatedReferCode, joinedWithRefer: appliedReferral, walletBalance: 10, kyc: "Inactive", upiId: "" } 
@@ -219,12 +225,12 @@ export function bindLoginLogic(onLoginSuccess) {
                 document.getElementById('registration-popup-modal').style.display = "flex";
                 resetRegForm();
             } else {
-                document.getElementById('reg-error').innerText = "❌ This number is already registered!";
+                document.getElementById('reg-error').innerText = "❌ Processing error from server matrix!";
             }
         } catch(e) { 
             document.getElementById('reg-btn-loader').style.display = "none";
             document.getElementById('reg-btn-text').innerText = "Create Account";
-            document.getElementById('reg-error').innerText = "❌ Network processing failure.";
+            document.getElementById('reg-error').innerText = "❌ Request transmitted but failed verification.";
         }
     };
 }
