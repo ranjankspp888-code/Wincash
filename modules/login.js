@@ -1,114 +1,119 @@
 // GitHub Path: modules/login.js
-// Seamless Transition UI - No Blinking, Pure Cinematic Fade Effect
+// Professional App Entry Layout - Smooth Upward Motion Transition (No Blink)
 
 const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec"; 
 
 export function drawGamingUI() {
     return `
         <style>
-            /* Fixed Global Background - No flashes between states */
-            .auth-screen-container {
+            /* Smooth Clean App Background */
+            .app-main-body {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
                 height: 100vh;
-                background: #f1f5f9; /* Professional Light Background */
+                background: #f1f5f9; /* Trusted light grey-blue color */
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 overflow: hidden;
             }
 
-            .auth-wrapper {
-                position: relative;
+            /* Main Structural Container */
+            .container-box {
                 width: 100%;
                 max-width: 360px;
                 padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
             }
 
-            /* 1. Cinematic Intro Overlay (No Blink Setup) */
-            .intro-screen {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: #0d0e15; /* Elegant Dark Intro Layer */
-                border-radius: 16px;
+            /* 1. App Logo & Brand Branding Area */
+            .app-branding-section {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                z-index: 10; /* Login ke upar baithega */
-                transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-                padding: 36px 24px;
+                margin-bottom: 24px;
+                transform: translateY(110px); /* Shuru me theek center me rahega */
+                transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); /* Slide hone ka smoother time */
+                z-index: 5;
             }
-            
             .modern-logo-box {
-                width: 80px;
-                height: 80px;
+                width: 76px;
+                height: 76px;
                 background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-                border-radius: 22px;
+                border-radius: 20px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-bottom: 24px;
-                box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+                box-shadow: 0 10px 20px rgba(218, 165, 32, 0.25);
                 font-size: 36px;
-                animation: pulse 1.5s infinite alternate;
             }
-            
             .intro-title {
-                font-size: 32px;
+                font-size: 30px;
                 font-weight: 800;
-                color: #ffffff; 
-                margin-bottom: 10px;
-                letter-spacing: 1px;
-            }
-            .intro-title span {
-                color: #ffd700; 
-            }
-            .intro-tagline {
-                font-size: 14px;
-                color: #94a3b8; 
-                font-weight: 500;
+                color: #1e293b; /* Dark text for light background trusted look */
+                margin-top: 14px;
                 letter-spacing: 0.5px;
             }
+            .intro-title span {
+                color: #b8860b; /* Gold Wincash touch */
+            }
+            .intro-tagline {
+                font-size: 13px;
+                color: #64748b; 
+                font-weight: 500;
+                margin-top: 4px;
+                transition: opacity 0.4s ease;
+            }
 
-            /* 2. Login Form Card (Pre-rendered underneath) */
+            /* 2. Login Card (Niche se slide hokar aayega) */
             .login-card {
                 background: #ffffff;
                 border-radius: 16px;
-                padding: 36px 24px;
+                padding: 32px 24px;
                 width: 100%;
                 border: 1px solid #e2e8f0;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-                z-index: 1; /* Niche pehle se ready hai */
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+                transform: translateY(40px); /* Niche baitha rahega hidden state me */
+                opacity: 0;
+                visibility: hidden;
+                transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, visibility 0.6s;
+                z-index: 2;
             }
-
             .login-heading {
-                font-size: 24px;
+                font-size: 22px;
                 font-weight: 700;
                 color: #0f172a;
-                margin-bottom: 28px;
+                margin-bottom: 24px;
                 text-align: left;
-                letter-spacing: -0.5px;
             }
-            .input-group {
-                margin-bottom: 20px;
+
+            /* Core Logic Transitions - Triggers when JS updates the class */
+            .branding-slide-up {
+                transform: translateY(0px) scale(0.9); /* 2 second baad automatic upar chala jayega */
             }
-            .input-group label {
-                display: block;
-                font-size: 12px;
-                font-weight: 600;
-                color: #475569;
-                margin-bottom: 8px;
+            .tagline-fade-out {
+                opacity: 0; /* Tagline dheere se hat jayegi space clean karne ke liye */
             }
+            .login-slide-up {
+                transform: translateY(0px); /* Card smoothly upar aayega */
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Form Elements styling */
+            .input-group { margin-bottom: 18px; }
+            .input-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; }
             .modern-input {
                 width: 100%;
-                background: #ffffff;
+                background: #f8fafc;
                 border: 1px solid #cbd5e1;
                 border-radius: 10px;
                 padding: 12px 14px;
@@ -117,12 +122,8 @@ export function drawGamingUI() {
                 outline: none;
                 transition: all 0.2s ease;
             }
-            .modern-input:focus {
-                border-color: #2563eb;
-                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-            }
-
-            /* Button Setup */
+            .modern-input:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+            
             .submit-btn {
                 background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
                 border: none;
@@ -137,57 +138,24 @@ export function drawGamingUI() {
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                transition: all 0.2s ease;
                 box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15);
             }
-            .submit-btn:disabled {
-                background: #94a3b8;
-                box-shadow: none;
-                cursor: not-allowed;
-            }
-
-            .btn-spinner {
-                display: none;
-                width: 18px;
-                height: 18px;
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                border-top-color: #ffffff;
-                animation: spin 0.8s linear infinite;
-            }
-
-            /* Smooth Hide Class Triggered by JS */
-            .intro-hidden {
-                opacity: 0 !important;
-                transform: scale(0.95) translateY(-10px); /* Halki flight upar ki taraf bina jhatke ke */
-                pointer-events: none;
-            }
-
+            .submit-btn:disabled { background: #94a3b8; box-shadow: none; cursor: not-allowed; }
+            .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #ffffff; animation: spin 0.8s linear infinite; }
             @keyframes spin { to { transform: rotate(360deg); } }
-            @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
-
-            .error-box {
-                color: #dc2626;
-                margin-top: 14px;
-                font-size: 13px;
-                font-weight: 500;
-                text-align: center;
-                min-height: 20px;
-            }
+            .error-box { color: #dc2626; margin-top: 14px; font-size: 13px; font-weight: 500; text-align: center; min-height: 20px; }
         </style>
 
-        <div class="auth-screen-container">
-            <div class="auth-wrapper">
+        <div class="app-main-body">
+            <div class="container-box">
                 
-                <!-- Intro Layer: Baad me bas ye smooth fadeout hoga -->
-                <div id="intro-arena" class="intro-screen">
+                <div id="brand-layer" class="app-branding-section">
                     <div class="modern-logo-box">🎮</div> 
                     <h1 class="intro-title"><span>Win</span>cash</h1>
-                    <p class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
+                    <p id="tagline-layer" class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
                 </div>
 
-                <!-- Login Layer: Jo peeche hi baitha hai bina blink kiye -->
-                <div class="login-card">
+                <div id="login-layer" class="login-card">
                     <h2 class="login-heading">Login</h2>
                     
                     <div class="input-group">
@@ -214,27 +182,28 @@ export function drawGamingUI() {
 }
 
 export function bindGameLogic() {
-    const introArena = document.getElementById('intro-arena');
+    const brandLayer = document.getElementById('brand-layer');
+    const taglineLayer = document.getElementById('tagline-layer');
+    const loginLayer = document.getElementById('login-layer');
+    
     const btn = document.getElementById('auth-submit-btn');
     const loader = document.getElementById('btn-loader');
     const btnText = document.getElementById('btn-text');
     const errorDiv = document.getElementById('login-error');
 
-    // 2.2 Second baad bina blink kiye ek dum smooth dissolve (fade out) effect
+    // 2.0 Second ke baad ek dum smooth structural slide shift active karna
     setTimeout(() => {
-        if (introArena) {
-            introArena.classList.add('intro-hidden');
-            // Animation poori hone ke baad remove karna taaki HTML clean rahe
-            setTimeout(() => introArena.remove(), 600);
-        }
-    }, 2200);
+        if (brandLayer) brandLayer.classList.add('branding-slide-up');
+        if (taglineLayer) taglineLayer.classList.add('tagline-fade-out');
+        if (loginLayer) loginLayer.classList.add('login-slide-up');
+    }, 2000);
 
     btn.addEventListener('click', async () => {
         const mobile = document.getElementById('login-mobile').value;
         const pass = document.getElementById('login-pass').value;
 
         if (!mobile || !pass) {
-            errorDiv.innerText = "⚠️ Please fill all parameters.";
+            errorDiv.innerText = "⚠️ Please fill all fields.";
             return;
         }
 
