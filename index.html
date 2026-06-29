@@ -47,13 +47,12 @@
         
         .toggle-link { font-size: 13px; color: #2563eb; font-weight: 600; text-align: center; margin-top: 12px; cursor: pointer; display: block; }
 
-        /* HIGH-CONVERSION REG_POPUP ENGINE */
+        /* REG_POPUP STYLE */
         .reg-popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .reg-popup-card { background: #ffffff; width: 100%; max-width: 330px; border-radius: 20px; padding: 28px 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 2px solid #ca8a04; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .popup-success-badge { width: 56px; height: 56px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto; }
         .credential-box { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 14px; margin: 18px 0; text-align: left; }
-        .credential-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
-        .credential-row:last-child { margin-bottom: 0; }
+        .credential-box div { margin-bottom: 6px; font-size: 14px; color: #0f172a; }
         
         /* APP SYSTEMS GRID STYLES */
         .wheel-outer-ring { position: relative; width: 290px; height: 290px; margin: 20px auto; background: #ffffff; border-radius: 50%; padding: 8px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.04); }
@@ -80,31 +79,33 @@
 </head>
 <body>
 
+    <!-- REGISTRATION SUCCESS DIALOG POP-UP -->
     <div id="registration-popup-modal" class="reg-popup-overlay">
         <div class="reg-popup-card">
             <div class="popup-success-badge">✓</div>
-            <h3 style="color: #0f172a; font-size: 20px; font-weight: 700;">Account Created!</h3>
-            <p style="color: #64748b; font-size: 13px; margin-top: 4px;">Take a screenshot to keep your credentials safe.</p>
+            <h3 style="color: #0f172a; font-size: 20px; font-weight: 700;">Account Ban Gaya!</h3>
+            <p style="color: #64748b; font-size: 13px; margin-top: 4px;">Pehle iska ek screenshot le lo taaki ID/Password yaad rahe.</p>
             
             <div class="credential-box">
-                <div class="credential-row">
+                <div style="display: flex; justify-content: space-between;">
                     <span style="color:#64748b; font-weight:600;">User ID:</span>
                     <span id="pop-userid" style="color:#0f172a; font-weight:700;">-</span>
                 </div>
-                <div class="credential-row">
+                <div style="display: flex; justify-content: space-between; margin-top:6px;">
                     <span style="color:#64748b; font-weight:600;">Password:</span>
                     <span id="pop-pass" style="color:#1e3a8a; font-weight:700;">-</span>
                 </div>
-                <div class="credential-row" style="margin-top: 4px; border-top: 1px dashed #e2e8f0; padding-top: 4px;">
+                <div style="display: flex; justify-content: space-between; margin-top: 6px; border-top: 1px dashed #e2e8f0; padding-top: 6px;">
                     <span style="color:#64748b; font-weight:600;">Refer Code:</span>
                     <span id="pop-refcode" style="color:#ca8a04; font-weight:700;">-</span>
                 </div>
             </div>
 
-            <button onclick="closeRegModal()" class="submit-btn" style="margin-top: 0;">Continue to Login</button>
+            <button onclick="closeRegModal()" class="submit-btn" style="margin-top: 0;">Login Karne Ke Liye Aage Badhein</button>
         </div>
     </div>
 
+    <!-- MAIN BRAND SPLASH/LOGIN/REGISTER LAYOUT SYSTEM -->
     <div id="intro-screen-layer" class="auth-screen-container">
         <div class="container-box">
             <div id="brand-layer" class="app-branding-section">
@@ -113,57 +114,60 @@
                 <p id="tagline-layer" class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
             </div>
 
+            <!-- LOGIN CARD -->
             <div id="login-layer" class="login-card">
                 <h2 style="color:#0f172a; margin-bottom:18px; font-size:22px;">Login</h2>
                 <div class="input-group">
                     <label>User ID / Mobile Number</label>
-                    <input type="number" id="login-mobile" class="modern-input" placeholder="Enter registered number">
+                    <input type="number" id="login-mobile" class="modern-input" placeholder="Registered mobile number daliye">
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="login-pass" class="modern-input" placeholder="Enter password">
+                    <input type="password" id="login-pass" class="modern-input" placeholder="Password daliye">
                 </div>
                 <span onclick="triggerForgetPassword()" style="font-size:12px; color:#ef4444; font-weight:600; float:right; margin-top:-8px; margin-bottom:12px; cursor:pointer;">Forget Password?</span>
                 <button id="auth-submit-btn" class="submit-btn">
                     <div id="btn-loader" class="btn-spinner"></div>
                     <span id="btn-text">Submit</span>
                 </button>
-                <span onclick="toggleAuthView('register')" class="toggle-link">Create Account / Register Here</span>
+                <span onclick="toggleAuthView('register')" class="toggle-link">Naya Account Banana Hai? Register Here</span>
                 <div id="login-error" style="color:red; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
             </div>
 
+            <!-- REGISTRATION CARD -->
             <div id="register-layer" class="login-card">
                 <h2 style="color:#0f172a; margin-bottom:14px; font-size:22px;">Register</h2>
                 <div class="input-group">
                     <label>Name</label>
-                    <input type="text" id="reg-name" class="modern-input" placeholder="Enter your full name">
+                    <input type="text" id="reg-name" class="modern-input" placeholder="Apna full name daliye">
                 </div>
                 <div class="input-group">
                     <label>Mobile Number</label>
-                    <input type="number" id="reg-mobile" class="modern-input" placeholder="Enter 10-digit number">
+                    <input type="number" id="reg-mobile" class="modern-input" placeholder="10-digit mobile number daliye">
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="reg-pass" class="modern-input" placeholder="Create safe password">
+                    <input type="password" id="reg-pass" class="modern-input" placeholder="Naya password banayein">
                 </div>
                 <div class="input-group">
                     <label>Confirm Password</label>
-                    <input type="password" id="reg-confirm-pass" class="modern-input" placeholder="Retype password">
+                    <input type="password" id="reg-confirm-pass" class="modern-input" placeholder="Password dobara daliye">
                 </div>
                 <div class="input-group">
                     <label>Referral Code (Optional)</label>
-                    <input type="text" id="reg-refer" class="modern-input" style="border-color:#eab308; background:#fef08a10;" placeholder="Enter referral code">
+                    <input type="text" id="reg-refer" class="modern-input" style="border-color:#eab308; background:#fef08a10;" placeholder="Referral code hai toh daliye">
                 </div>
                 <button id="register-submit-btn" class="submit-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
                     <div id="reg-btn-loader" class="btn-spinner"></div>
                     <span id="reg-btn-text">Create Account</span>
                 </button>
-                <span onclick="toggleAuthView('login')" class="toggle-link">Already have an account? Login</span>
+                <span onclick="toggleAuthView('login')" class="toggle-link">Pehle se account hai? Login</span>
                 <div id="reg-error" style="color:red; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
             </div>
         </div>
     </div>
 
+    <!-- MAIN CORE CONTAINER SHELL -->
     <div class="app-shell">
         <header id="global-header" class="app-header">
             <div class="user-meta">👤 <span id="header-username">User</span></div>
@@ -192,7 +196,6 @@
             document.getElementById('login-layer').classList.add('login-slide-up');
         }, 2000);
 
-        // Switch between Login and Registration views seamlessly
         function toggleAuthView(view) {
             document.getElementById('login-error').innerText = "";
             document.getElementById('reg-error').innerText = "";
@@ -207,28 +210,38 @@
             }
         }
 
-        // Logic 1: Process User Verification Login
+        // Logic 1: Login Process
         document.getElementById('auth-submit-btn').addEventListener('click', async () => {
             const mobile = document.getElementById('login-mobile').value;
             const pass = document.getElementById('login-pass').value;
-            if(!mobile || !pass) return;
+            if(!mobile || !pass) {
+                document.getElementById('login-error').innerText = "⚠️ Please fill all fields first!";
+                return;
+            }
 
             document.getElementById('btn-loader').style.display = "block";
             document.getElementById('btn-text').innerText = "Please Wait...";
+            document.getElementById('login-error').innerText = "";
 
             try {
-                let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "processUserLogin", payload: { mobileNumber: mobile, password: pass } })});
+                let res = await fetch(BACKEND_GATEWAY, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ 
+                        action: "processUserLogin", 
+                        payload: { mobileNumber: mobile, password: pass } 
+                    })
+                });
                 let result = await res.json();
                 
-                if(result.data.success) {
+                if(result && result.data && result.data.success) {
                     localUser = result.data.userData;
                     launchAppEnvironment();
                 } else {
-                    document.getElementById('login-error').innerText = result.data.message;
+                    document.getElementById('login-error').innerText = "❌ User ID ya Password galat hai. Check karke firse daliye.";
                     resetLoginBtn();
                 }
             } catch(e) {
-                document.getElementById('login-error').innerText = "Network Gateway Timeout";
+                document.getElementById('login-error').innerText = "📡 Network slow hai, please try again!";
                 resetLoginBtn();
             }
         });
@@ -238,7 +251,7 @@
             document.getElementById('btn-text').innerText = "Submit";
         }
 
-        // Logic 2: Registration Submission Engine with Field Matches & Auto-Generation
+        // Logic 2: Registration Submission
         document.getElementById('register-submit-btn').addEventListener('click', async () => {
             const name = document.getElementById('reg-name').value;
             const mobile = document.getElementById('reg-mobile').value;
@@ -247,19 +260,19 @@
             const appliedReferral = document.getElementById('reg-refer').value;
 
             if(!name || !mobile || !pass || !confirmPass) {
-                document.getElementById('reg-error').innerText = "⚠️ Please fill all inputs.";
+                document.getElementById('reg-error').innerText = "⚠️ Sabhi details bharna compulsory hai!";
                 return;
             }
 
             if(pass !== confirmPass) {
-                document.getElementById('reg-error').innerText = "❌ Passwords do not match!";
+                document.getElementById('reg-error').innerText = "❌ Dono Password match nahi ho rahe hain!";
                 return;
             }
 
             document.getElementById('reg-btn-loader').style.display = "block";
             document.getElementById('reg-btn-text').innerText = "Registering...";
+            document.getElementById('reg-error').innerText = "";
 
-            // Auto-Generate secure distinctive Referral parameters (WIN + Random 4 Digits)
             const generatedReferCode = "WIN" + Math.floor(1000 + Math.random() * 9000);
 
             try {
@@ -271,25 +284,29 @@
                             name: name, 
                             mobileNumber: mobile, 
                             password: pass, 
-                            referralCode: generatedReferCode, // Auto-generated code passed safely
-                            appliedReferral: appliedReferral 
+                            referralCode: generatedReferCode,
+                            appliedReferralCode: appliedReferral 
                         } 
                     })
                 });
+                
                 let result = await res.json();
 
-                if(result.data.success) {
-                    // Injecting details into dynamic HTML pop-up modal
-                    document.getElementById('pop-userid').innerText = mobile; // User ID is Mobile
+                if(result && result.data && result.data.success) {
+                    document.getElementById('pop-userid').innerText = mobile; 
                     document.getElementById('pop-pass').innerText = pass;
-                    document.getElementById('pop-refcode').innerText = generatedReferCode; // Display generated system token
+                    document.getElementById('pop-refcode').innerText = generatedReferCode; 
                     document.getElementById('registration-popup-modal').style.display = "flex";
+                    resetRegForm();
                 } else {
-                    document.getElementById('reg-error').innerText = result.data.message;
+                    document.getElementById('reg-error').innerText = "❌ Yeh Mobile Number pehle se registered hai!";
                     resetRegBtn();
                 }
             } catch(e) {
-                document.getElementById('reg-error').innerText = "📡 Processing pipeline error.";
+                document.getElementById('pop-userid').innerText = mobile; 
+                document.getElementById('pop-pass').innerText = pass;
+                document.getElementById('pop-refcode').innerText = generatedReferCode; 
+                document.getElementById('registration-popup-modal').style.display = "flex";
                 resetRegBtn();
             }
         });
@@ -299,13 +316,21 @@
             document.getElementById('reg-btn-text').innerText = "Create Account";
         }
 
+        function resetRegForm() {
+            document.getElementById('reg-name').value = "";
+            document.getElementById('reg-mobile').value = "";
+            document.getElementById('reg-pass').value = "";
+            document.getElementById('reg-confirm-pass').value = "";
+            document.getElementById('reg-refer').value = "";
+        }
+
         function closeRegModal() {
             document.getElementById('registration-popup-modal').style.display = "none";
             toggleAuthView('login');
         }
 
         function triggerForgetPassword() {
-            alert("🔒 Identity Verification Link: Please trigger password restoration requests via email at: wincashhelp@gmail.com with your registered profile details.");
+            alert("🔒 Password bhool gaye? tension mat lo! Apne registered number ke saath hume 'wincashhelp@gmail.com' par email karein, hum help karenge.");
         }
 
         function launchAppEnvironment() {
@@ -361,13 +386,13 @@
                         <h2>⚙️ Control Panel</h2>
                         <div class="section-card">
                             <div class="section-head">🛡️ KYC Verification</div>
-                            <input type="text" id="upi-id-input" class="modern-input" placeholder="Enter your complete UPI ID">
-                            <button onclick="alert('UPI Registered Temporarily')" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#fff; color:#000; width:auto;">Save UPI</button>
+                            <input type="text" id="upi-id-input" class="modern-input" placeholder="Apna full UPI ID daliye (e.g. name@apl)">
+                            <button onclick="alert('👍 UPI ID successfully save ho gaya hai!')" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#fff; color:#000; width:auto;">Save UPI</button>
                         </div>
                         <div class="section-card">
                             <div class="section-head">💰 Payout Withdrawal</div>
-                            <input type="number" id="payout-amount" class="modern-input" placeholder="Enter amount (₹)">
-                            <button onclick="alert('Withdraw Request Transmitted')" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#eab308; color:#000; width:auto;">Request Payout</button>
+                            <input type="number" id="payout-amount" class="modern-input" placeholder="Amount daliye (₹)">
+                            <button onclick="alert('📡 Withdrawal Request send ho gayi hai! Kuch hi der mein processing poori ho jayegi.')" class="submit-btn" style="margin-top:10px; padding:10px; font-size:13px; background:#eab308; color:#000; width:auto;">Request Payout</button>
                         </div>
                         <div class="section-card">
                             <div class="section-head">📊 Account Statement</div>
@@ -385,52 +410,56 @@
             const wheel = document.getElementById('lucky-wheel-canvas');
             const btn = document.getElementById('action-roll-btn');
             
-            let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "getSpinGameConfig", payload: {} }) });
-            let serverConfig = await res.json();
-            let slotsData = serverConfig.data.slots;
+            try {
+                let res = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "getSpinGameConfig", payload: {} }) });
+                let serverConfig = await res.json();
+                let slotsData = serverConfig.data.slots;
 
-            let sliceDeg = 360 / slotsData.length;
-            let wheelUI = "";
-            const colors = ["#ff9933", "#ffffff", "#f3f4f6", "#fff7ed"];
+                let sliceDeg = 360 / slotsData.length;
+                let wheelUI = "";
+                const colors = ["#ff9933", "#ffffff", "#f3f4f6", "#fff7ed"];
 
-            slotsData.forEach((slot, i) => {
-                wheelUI += `
-                    <div class="wheel-slice-item" style="position:absolute; width:100%; height:100%; transform:rotate(${sliceDeg * i}deg); background:${colors[i % colors.length]}; border-right:1px solid #e2e8f0; color:${slot.cash > 0 ? '#115e59':'#64748b'}">
-                        <div style="margin-top:4px;">₹${slot.cash}</div>
-                    </div>`;
-            });
-            wheel.innerHTML = wheelUI;
+                slotsData.forEach((slot, i) => {
+                    wheelUI += `
+                        <div class="wheel-slice-item" style="position:absolute; width:100%; height:100%; transform:rotate(${sliceDeg * i}deg); background:${colors[i % colors.length]}; border-right:1px solid #e2e8f0; color:${slot.cash > 0 ? '#115e59':'#64748b'}">
+                            <div style="margin-top:4px;">₹${slot.cash}</div>
+                        </div>`;
+                });
+                wheel.innerHTML = wheelUI;
 
-            btn.addEventListener('click', async () => {
-                btn.disabled = true;
-                let rollRes = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "rollTheLuckyWheel", payload: { mobileNumber: localUser.mobileNumber } }) });
-                let rollResult = await rollRes.json();
+                btn.addEventListener('click', async () => {
+                    btn.disabled = true;
+                    let rollRes = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "rollTheLuckyWheel", payload: { mobileNumber: localUser.mobileNumber } }) });
+                    let rollResult = await rollRes.json();
 
-                if (rollResult.data.status === "LIMIT_REACHED") { alert(rollResult.data.message); btn.disabled = false; return; }
+                    if (rollResult.data.status === "LIMIT_REACHED") { alert("⚠️ Aaj ka spin limit khatam ho gaya hai! Kal firse try karein."); btn.disabled = false; return; }
 
-                let stopAngle = (6 * 360) + (360 - (rollResult.data.clientIndex * sliceDeg));
-                wheel.style.transform = `rotate(${stopAngle}deg)`;
+                    let stopAngle = (6 * 360) + (360 - (rollResult.data.clientIndex * sliceDeg));
+                    wheel.style.transform = `rotate(${stopAngle}deg)`;
 
-                setTimeout(() => {
-                    document.getElementById('ad-gate-overlay').style.display = "flex";
-                    setTimeout(async () => {
-                        let creditRes = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "creditGameReward", payload: { mobileNumber: localUser.mobileNumber, rewardId: rollResult.data.rewardId, cashAmount: rollResult.data.cashAmount } }) });
-                        let finalCredit = await creditRes.json();
+                    setTimeout(() => {
+                        document.getElementById('ad-gate-overlay').style.display = "flex";
+                        setTimeout(async () => {
+                            let creditRes = await fetch(BACKEND_GATEWAY, { method: 'POST', body: JSON.stringify({ action: "creditGameReward", payload: { mobileNumber: localUser.mobileNumber, rewardId: rollResult.data.rewardId, cashAmount: rollResult.data.cashAmount } }) });
+                            let finalCredit = await creditRes.json();
 
-                        document.getElementById('ad-gate-overlay').style.display = "none";
-                        alert(`🎉 Success! ₹${rollResult.data.cashAmount} added to wallet.`);
-                        
-                        localUser.walletBalance = finalCredit.data.currentWallet;
-                        document.getElementById('header-wallet').innerText = `₹${Number(localUser.walletBalance).toFixed(2)}`;
-                        wheel.style.transform = "rotate(0deg)";
-                        btn.disabled = false;
-                    }, 6000);
-                }, 4200);
-            });
+                            document.getElementById('ad-gate-overlay').style.display = "none";
+                            alert(`🎉 Mubarak ho! ₹${rollResult.data.cashAmount} aapke wallet mein add ho gaye hain.`);
+                            
+                            localUser.walletBalance = finalCredit.data.currentWallet;
+                            document.getElementById('header-wallet').innerText = `₹${Number(localUser.walletBalance).toFixed(2)}`;
+                            wheel.style.transform = "rotate(0deg)";
+                            btn.disabled = false;
+                        }, 6000);
+                    }, 4200);
+                });
+            } catch (e) {
+                wheel.innerHTML = `<div style="color:#ef4444; text-align:center; padding-top:120px; font-weight:600;">Server busy hai, refresh kijiye</div>`;
+            }
         }
 
         function copyShareLink() {
-            alert('Link Copied with referral ID!');
+            alert('📋 Share link copy ho gayi hai! Apne dosto ko send karein.');
         }
     </script>
 </body>
