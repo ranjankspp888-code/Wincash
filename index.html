@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wincash</title>
     <style>
-        /* Core Styling */
+        /* Core Layout Architecture */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body, html { width: 100%; height: 100%; background: #0f172a; color: #ffffff; overflow: hidden; }
         
         .app-shell { display: flex; flex-direction: column; height: 100vh; width: 100%; position: relative; }
         
-        /* Permanent Header & Footer Navigation */
+        /* Permanent Header & Footer Configuration */
         .app-header { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: #1e1b4b; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: none; justify-content: space-between; align-items: center; padding: 0 16px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .user-meta { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #f1f5f9; font-size: 14px; }
         .wallet-container { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: #0f172a; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(234, 179, 8, 0.25); }
@@ -22,29 +22,32 @@
         .nav-item.active { color: #facc15; transform: translateY(-1px); }
         .nav-icon { font-size: 20px; }
 
-        /* AUTH CONTAINER & SYSTEMS */
-        .auth-screen-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f5f9; display: flex; align-items: center; justify-content: center; z-index: 2000; overflow-y: auto; }
-        .container-box { width: 100%; max-width: 360px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .app-branding-section { display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateY(110px); transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); z-index: 5; }
-        .modern-logo-box { width: 76px; height: 76px; background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(218, 165, 32, 0.25); font-size: 36px; }
-        .intro-title { font-size: 30px; font-weight: 800; color: #1e293b; margin-top: 14px; }
+        /* AUTH CONTAINER GRID STYLE OVERRIDES */
+        .auth-screen-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #f1f5f9; display: flex; align-items: center; justify-content: center; z-index: 2000; overflow-y: auto; padding: 10px 0; }
+        .container-box { width: 100%; max-width: 360px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100%; }
+        
+        .app-branding-section { display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateY(40px); transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); z-index: 5; margin-bottom: 15px; }
+        .modern-logo-box { width: 70px; height: 70px; background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%); border-radius: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(218, 165, 32, 0.2); font-size: 32px; }
+        .intro-title { font-size: 28px; font-weight: 800; color: #1e293b; margin-top: 10px; }
         .intro-title span { color: #b8860b; }
         .intro-tagline { font-size: 13px; color: #64748b; font-weight: 500; margin-top: 4px; transition: opacity 0.4s ease; }
         
-        .login-card { background: #ffffff; border-radius: 16px; padding: 32px 24px; width: 100%; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04); transform: translateY(40px); opacity: 0; visibility: hidden; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease; z-index: 2; display: none; }
-        .branding-slide-up { transform: translateY(-10px) scale(0.85); }
-        .tagline-fade-out { opacity: 0; }
-        .login-slide-up { transform: translateY(-5px); opacity: 1; visibility: visible; display: block; }
+        .login-card { background: #ffffff; border-radius: 16px; padding: 24px 20px; width: 100%; border: 1px solid #e2e8f0; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04); transform: translateY(20px); opacity: 0; visibility: hidden; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease; z-index: 2; display: none; }
         
-        .input-group { margin-bottom: 14px; text-align: left; width: 100%; }
-        .input-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 5px; }
-        .modern-input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 11px 14px; color: #1e293b; font-size: 14px; outline: none; }
-        .submit-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; color: #ffffff; padding: 14px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;}
+        /* TRANSITION STATE MODIFIERS */
+        .branding-slide-up { transform: translateY(0px) scale(0.85); margin-bottom: 10px; }
+        .tagline-fade-out { opacity: 0; display: none; }
+        .login-slide-up { transform: translateY(0px); opacity: 1; visibility: visible; display: block; }
+        
+        .input-group { margin-bottom: 12px; text-align: left; width: 100%; }
+        .input-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+        .modern-input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; color: #1e293b; font-size: 14px; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; color: #ffffff; padding: 12px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px;}
         .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #ffffff; animation: spin 0.8s linear infinite; }
         
-        .toggle-link { font-size: 13px; color: #2563eb; font-weight: 600; text-align: center; margin-top: 16px; cursor: pointer; display: block; }
+        .toggle-link { font-size: 13px; color: #2563eb; font-weight: 600; text-align: center; margin-top: 12px; cursor: pointer; display: block; }
 
-        /* REGISTRATION DYNAMIC POPUP DIALOG */
+        /* HIGH-CONVERSION REG_POPUP ENGINE */
         .reg-popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .reg-popup-card { background: #ffffff; width: 100%; max-width: 330px; border-radius: 20px; padding: 28px 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 2px solid #ca8a04; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .popup-success-badge { width: 56px; height: 56px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto; }
@@ -52,7 +55,7 @@
         .credential-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
         .credential-row:last-child { margin-bottom: 0; }
         
-        /* APP ENGINE SUBSYSTEMS */
+        /* APP SYSTEMS GRID STYLES */
         .wheel-outer-ring { position: relative; width: 290px; height: 290px; margin: 20px auto; background: #ffffff; border-radius: 50%; padding: 8px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.04); }
         .zupee-pointer { position: absolute; top: -10px; left: calc(50% - 14px); z-index: 20; width: 28px; height: 28px; background: #ef4444; clip-path: polygon(50% 100%, 0 0, 100% 0); }
         .wheel-center-cap { position: absolute; top: calc(50% - 22px); left: calc(50% - 22px); width: 44px; height: 44px; background: #ffffff; border: 4px solid #1e1b4b; border-radius: 50%; z-index: 15; }
@@ -77,21 +80,24 @@
 </head>
 <body>
 
-    <!-- CUSTOM HTML REGISTRATION SUCCESS DIALOG POP-UP -->
     <div id="registration-popup-modal" class="reg-popup-overlay">
         <div class="reg-popup-card">
             <div class="popup-success-badge">✓</div>
             <h3 style="color: #0f172a; font-size: 20px; font-weight: 700;">Account Created!</h3>
-            <p style="color: #64748b; font-size: 13px; margin-top: 4px;">Take a screenshot to keep your secure login credentials safe.</p>
+            <p style="color: #64748b; font-size: 13px; margin-top: 4px;">Take a screenshot to keep your credentials safe.</p>
             
             <div class="credential-box">
                 <div class="credential-row">
-                    <span style="color:#64748b; font-weight:600;">User ID/Mobile:</span>
+                    <span style="color:#64748b; font-weight:600;">User ID:</span>
                     <span id="pop-userid" style="color:#0f172a; font-weight:700;">-</span>
                 </div>
                 <div class="credential-row">
-                    <span style="color:#64748b; font-weight:600;">Secure Password:</span>
+                    <span style="color:#64748b; font-weight:600;">Password:</span>
                     <span id="pop-pass" style="color:#1e3a8a; font-weight:700;">-</span>
+                </div>
+                <div class="credential-row" style="margin-top: 4px; border-top: 1px dashed #e2e8f0; padding-top: 4px;">
+                    <span style="color:#64748b; font-weight:600;">Refer Code:</span>
+                    <span id="pop-refcode" style="color:#ca8a04; font-weight:700;">-</span>
                 </div>
             </div>
 
@@ -99,7 +105,6 @@
         </div>
     </div>
 
-    <!-- MAIN BRAND SPLASH/LOGIN/REGISTER LAYOUT SYSTEM -->
     <div id="intro-screen-layer" class="auth-screen-container">
         <div class="container-box">
             <div id="brand-layer" class="app-branding-section">
@@ -108,7 +113,6 @@
                 <p id="tagline-layer" class="intro-tagline">Spin the wheel, change your fortune ⚡</p>
             </div>
 
-            <!-- VIEW 1: SIGN IN PAGE -->
             <div id="login-layer" class="login-card">
                 <h2 style="color:#0f172a; margin-bottom:18px; font-size:22px;">Login</h2>
                 <div class="input-group">
@@ -128,11 +132,10 @@
                 <div id="login-error" style="color:red; font-size:12px; margin-top:10px; text-align:center; font-weight:500;"></div>
             </div>
 
-            <!-- VIEW 2: SIGN UP / REGISTRATION WITH REFERRAL BOX -->
             <div id="register-layer" class="login-card">
-                <h2 style="color:#0f172a; margin-bottom:18px; font-size:22px;">Register</h2>
+                <h2 style="color:#0f172a; margin-bottom:14px; font-size:22px;">Register</h2>
                 <div class="input-group">
-                    <label>Full Name</label>
+                    <label>Name</label>
                     <input type="text" id="reg-name" class="modern-input" placeholder="Enter your full name">
                 </div>
                 <div class="input-group">
@@ -140,8 +143,12 @@
                     <input type="number" id="reg-mobile" class="modern-input" placeholder="Enter 10-digit number">
                 </div>
                 <div class="input-group">
-                    <label>Create Secure Password</label>
-                    <input type="password" id="reg-pass" class="modern-input" placeholder="Create strong password">
+                    <label>Password</label>
+                    <input type="password" id="reg-pass" class="modern-input" placeholder="Create safe password">
+                </div>
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="reg-confirm-pass" class="modern-input" placeholder="Retype password">
                 </div>
                 <div class="input-group">
                     <label>Referral Code (Optional)</label>
@@ -157,7 +164,6 @@
         </div>
     </div>
 
-    <!-- CORE INTERNAL APPLICATION LOCK CONTAINER SHELL -->
     <div class="app-shell">
         <header id="global-header" class="app-header">
             <div class="user-meta">👤 <span id="header-username">User</span></div>
@@ -232,43 +238,58 @@
             document.getElementById('btn-text').innerText = "Submit";
         }
 
-        // Logic 2: Registration Submission Engine 
+        // Logic 2: Registration Submission Engine with Field Matches & Auto-Generation
         document.getElementById('register-submit-btn').addEventListener('click', async () => {
             const name = document.getElementById('reg-name').value;
             const mobile = document.getElementById('reg-mobile').value;
             const pass = document.getElementById('reg-pass').value;
-            const referCode = document.getElementById('reg-refer').value;
+            const confirmPass = document.getElementById('reg-confirm-pass').value;
+            const appliedReferral = document.getElementById('reg-refer').value;
 
-            if(!name || !mobile || !pass) {
-                document.getElementById('reg-error').innerText = "⚠️ Please fill all required fields.";
+            if(!name || !mobile || !pass || !confirmPass) {
+                document.getElementById('reg-error').innerText = "⚠️ Please fill all inputs.";
+                return;
+            }
+
+            if(pass !== confirmPass) {
+                document.getElementById('reg-error').innerText = "❌ Passwords do not match!";
                 return;
             }
 
             document.getElementById('reg-btn-loader').style.display = "block";
             document.getElementById('reg-btn-text').innerText = "Registering...";
 
+            // Auto-Generate secure distinctive Referral parameters (WIN + Random 4 Digits)
+            const generatedReferCode = "WIN" + Math.floor(1000 + Math.random() * 9000);
+
             try {
-                // Backend call triggered for processing account sign up configurations
                 let res = await fetch(BACKEND_GATEWAY, { 
                     method: 'POST', 
                     body: JSON.stringify({ 
                         action: "registerNewUser", 
-                        payload: { name: name, mobileNumber: mobile, password: pass, appliedReferral: referCode } 
+                        payload: { 
+                            name: name, 
+                            mobileNumber: mobile, 
+                            password: pass, 
+                            referralCode: generatedReferCode, // Auto-generated code passed safely
+                            appliedReferral: appliedReferral 
+                        } 
                     })
                 });
                 let result = await res.json();
 
                 if(result.data.success) {
-                    // Injecting strings inside custom html notification box modal
-                    document.getElementById('pop-userid').innerText = mobile;
+                    // Injecting details into dynamic HTML pop-up modal
+                    document.getElementById('pop-userid').innerText = mobile; // User ID is Mobile
                     document.getElementById('pop-pass').innerText = pass;
+                    document.getElementById('pop-refcode').innerText = generatedReferCode; // Display generated system token
                     document.getElementById('registration-popup-modal').style.display = "flex";
                 } else {
                     document.getElementById('reg-error').innerText = result.data.message;
                     resetRegBtn();
                 }
             } catch(e) {
-                document.getElementById('reg-error').innerText = "📡 Cloud deployment pipeline latency error.";
+                document.getElementById('reg-error').innerText = "📡 Processing pipeline error.";
                 resetRegBtn();
             }
         });
@@ -284,7 +305,7 @@
         }
 
         function triggerForgetPassword() {
-            alert("🔒 Identity Verification Link: Please trigger password restoration requests via email at: wincashhelp@gmail.com with your registered user profile parameters.");
+            alert("🔒 Identity Verification Link: Please trigger password restoration requests via email at: wincashhelp@gmail.com with your registered profile details.");
         }
 
         function launchAppEnvironment() {
@@ -296,7 +317,7 @@
             switchView('home');
         }
 
-        // Internal View Port Manager Core Grid
+        // Viewport Page Switching Matrix
         async function switchView(target) {
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             const viewport = document.getElementById('dynamic-content-viewport');
