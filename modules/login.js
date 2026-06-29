@@ -1,6 +1,6 @@
 // GitHub Path: modules/login.js
 
-const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycbxMyKNAmfTUdW9yKCKggFn_T7WAuXSuqtCEYzq06A-h-mkKe4NV4ue6ioDaOpSW0H8cSw/exec";
+const BACKEND_GATEWAY = "https://script.google.com/macros/s/AKfycb0uYQfYcFvNDI0161bAbLjRMxucj5-ecp4DxqZbHDXYBgJHNBxHmb0WuqTMIHu8buoYw/exec";
 
 export function drawLoginUI() {
     return `
@@ -139,21 +139,22 @@ export function bindLoginLogic(onLoginSuccess) {
         }
     };
 
-    document.getElementById('link-to-register').addEventListener('click', () => toggleView('register'));
-    document.getElementById('link-to-login').addEventListener('click', () => toggleView('login'));
+    document.getElementById('link-to-register').onclick = () => toggleView('register');
+    document.getElementById('link-to-login').onclick = () => toggleView('login');
     
-    document.getElementById('close-modal-btn').addEventListener('click', () => {
+    document.getElementById('close-modal-btn').onclick = () => {
         document.getElementById('registration-popup-modal').style.display = "none";
         toggleView('login');
-    });
+    };
 
-    document.getElementById('auth-submit-btn').addEventListener('click', async () => {
+    document.getElementById('auth-submit-btn').onclick = async () => {
         const mobile = document.getElementById('login-mobile').value;
         const pass = document.getElementById('login-pass').value;
         if(!mobile || !pass) return;
 
         document.getElementById('btn-loader').style.display = "block";
         document.getElementById('btn-text').innerText = "Please Wait...";
+        document.getElementById('login-error').innerText = "";
 
         try {
             let res = await fetch(BACKEND_GATEWAY, { 
@@ -161,19 +162,23 @@ export function bindLoginLogic(onLoginSuccess) {
                 body: JSON.stringify({ action: "processUserLogin", payload: { mobileNumber: mobile, password: pass } })
             });
             let result = await res.json();
+            
+            document.getElementById('btn-loader').style.display = "none";
+            document.getElementById('btn-text').innerText = "Submit";
+
             if(result && result.data && result.data.success) {
                 onLoginSuccess(result.data.userData);
             } else {
-                let fallbackMockUser = { fullName: "Player", mobileNumber: mobile, walletBalance: 10.00, myOwnReferCode: "WIN" + mobile.substring(6) };
-                onLoginSuccess(fallbackMockUser);
+                document.getElementById('login-error').innerText = "❌ Invalid User ID or Password!";
             }
         } catch(e) {
-            let fallbackMockUser = { fullName: "Player", mobileNumber: mobile, walletBalance: 10.00, myOwnReferCode: "WIN" + mobile.substring(6) };
-            onLoginSuccess(fallbackMockUser);
+            document.getElementById('btn-loader').style.display = "none";
+            document.getElementById('btn-text').innerText = "Submit";
+            document.getElementById('login-error').innerText = "❌ Connection timeout! Server did not respond.";
         }
-    });
+    };
 
-    document.getElementById('register-submit-btn').addEventListener('click', async () => {
+    document.getElementById('register-submit-btn').onclick = async () => {
         const name = document.getElementById('reg-name').value;
         const mobile = document.getElementById('reg-mobile').value;
         const pass = document.getElementById('reg-pass').value;
@@ -194,25 +199,34 @@ export function bindLoginLogic(onLoginSuccess) {
 
         const generatedReferCode = "WIN" + Math.floor(1000 + Math.random() * 9000);
 
-        document.getElementById('pop-userid').innerText = mobile; 
-        document.getElementById('pop-pass').innerText = pass;
-        document.getElementById('pop-refcode').innerText = generatedReferCode; 
-        document.getElementById('registration-popup-modal').style.display = "flex";
-        
-        document.getElementById('reg-btn-loader').style.display = "none";
-        document.getElementById('reg-btn-text').innerText = "Create Account";
-
         try {
-            fetch(BACKEND_GATEWAY, { 
+            let res = await fetch(BACKEND_GATEWAY, { 
                 method: 'POST', 
                 body: JSON.stringify({ 
                     action: "registerNewUser", 
-                    payload: { userId: mobile, fullName: name, mobileNumber: mobile, password: pass, myOwnReferCode: generatedReferCode, joinedWithRefer: appliedReferral, walletBalance: 0, kyc: "Inactive", upiId: "" } 
+                    payload: { userId: mobile, fullName: name, mobileNumber: mobile, password: pass, myOwnReferCode: generatedReferCode, joinedWithRefer: appliedReferral, walletBalance: 10, kyc: "Inactive", upiId: "" } 
                 })
             });
-            resetRegForm();
-        } catch(e) { console.log("Sync complete."); }
-    });
+            let result = await res.json();
+            
+            document.getElementById('reg-btn-loader').style.display = "none";
+            document.getElementById('reg-btn-text').innerText = "Create Account";
+
+            if(result && result.data && result.data.success) {
+                document.getElementById('pop-userid').innerText = mobile; 
+                document.getElementById('pop-pass').innerText = pass;
+                document.getElementById('pop-refcode').innerText = generatedReferCode; 
+                document.getElementById('registration-popup-modal').style.display = "flex";
+                resetRegForm();
+            } else {
+                document.getElementById('reg-error').innerText = "❌ This number is already registered!";
+            }
+        } catch(e) { 
+            document.getElementById('reg-btn-loader').style.display = "none";
+            document.getElementById('reg-btn-text').innerText = "Create Account";
+            document.getElementById('reg-error').innerText = "❌ Network processing failure.";
+        }
+    };
 }
 
 function resetRegForm() {
